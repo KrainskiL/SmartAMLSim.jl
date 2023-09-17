@@ -1,0 +1,7 @@
+ID,Type,BusinessType
+1,I,Domestic
+2,I,Domestic
+3,I,Domestic
+4,E,ATM
+5,E,International
+6,E,International

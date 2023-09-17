@@ -1,0 +1,5 @@
+Side,BusinessType,Amount
+D,Domestic,700
+C,International,200
+C,Domestic,600
+D,ATM,100

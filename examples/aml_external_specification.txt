@@ -1,0 +1,4 @@
+BusinessType,DetectionMultiplier
+ATM,0.0001
+Domestic,0.001
+International,0.01
