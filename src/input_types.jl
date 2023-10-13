@@ -62,7 +62,7 @@ Type representing internal AML rule used by a financial institution.
 * `business_type::String` - a keyword matching business type of entities, e.g. ATM, International
 * `amount::Number` - threshold value for triggering an alert with a given rule
 """
-struct AMLInternalRule
+mutable struct AMLInternalRule
     side::Char
     business_type::String
     amount::Number
@@ -77,7 +77,7 @@ Type representing external AML systems maintained by external financial institut
 * `business_type::String` - a keyword matching business type of entities, e.g. ATM, International
 * `detection_multiplier::Float64` - value of detection multiplier which determines detection chance linearly increasing with the value of outgoing transactions of particular `business_type`
 """
-struct AMLExternalRule
+mutable struct AMLExternalRule
     business_type::String
     detection_multiplier::Float64
 end

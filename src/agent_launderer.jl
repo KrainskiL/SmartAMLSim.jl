@@ -64,7 +64,7 @@ function optimize_single_problem(agent::LaunderingAgent,
     n_external = length(agent.aml_external_specs)
     n_credit_internal = length(credit_int_rules)
     model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
-    register(model, Symbol(agent.utility_function), 1, agent.utility_function; autodiff=true)
+    register(model, Symbol("utility_function"), 1, agent.utility_function; autodiff=true)
     #Decision variables
     ##Debit (outgoing) transactions - each external stream is one variable
     @variable(model, x[1:n_external] >= 0)
@@ -127,5 +127,10 @@ function optimize_launderer_decision(agent::LaunderingAgent,
         push!(optimized_variants, (optimize_single_problem(agent, fi, comb, p_internal), comb, length(comb), p_internal))
     end
     filter!(x -> (termination_status(x[1]) == LOCALLY_SOLVED && primal_status(x[1]) == FEASIBLE_POINT), optimized_variants)
-    return [(objective_value(v[1]), sum(round.(value.(v[1][:x]))), sum(round.(value.(v[1][:y]))), v[2], v[3], v[4]) for v in optimized_variants]
+    opt = argmax((x -> objective_value(x[1])), optimized_variants)
+    return (util=objective_value(opt[1]),
+        sum_out=sum(round.(value.(opt[1][:x]))),
+        sum_in=sum(round.(value.(opt[1][:y]))),
+        rules_breached=opt[3],
+        p_internal=opt[4])
 end

@@ -22,4 +22,5 @@ using SmartAMLSim
         ',',
         true);
     epoch = SmartAMLSim.run_epoch(sim_env, agent, fi)
+    epochs = run_n_epochs(10, sim_env, agent, fi)
 end

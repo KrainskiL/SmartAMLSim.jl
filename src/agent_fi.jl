@@ -41,13 +41,13 @@ function initialize_fi_agent(env::SmartAMLSimEnv,
         for (aml_idx, aml_rule) in enumerate(aml_int_vec)
             if (aml_rule.side == 'D')
                 if (env.entities[trx.originator_entity_id].type == 'I')
-                    if startswith(env.entities[trx.beneficiary_entity_id].business_type, aml_rule.business_type)
+                    if startswith(env.entities[trx.beneficiary_entity_id].business_type, aml_rule.business_type) || (aml_rule.business_type == "All")
                         push!(clients_to_rules_map[trx.originator_entity_id][aml_idx], trx_idx)
                     end
                 end
             else
                 if (env.entities[trx.beneficiary_entity_id].type == 'I')
-                    if startswith(env.entities[trx.originator_entity_id].business_type, aml_rule.business_type)
+                    if startswith(env.entities[trx.originator_entity_id].business_type, aml_rule.business_type) || (aml_rule.business_type == "All")
                         push!(clients_to_rules_map[trx.beneficiary_entity_id][aml_idx], trx_idx)
                     end
                 end
